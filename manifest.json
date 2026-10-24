@@ -1,9 +1,9 @@
 {
   "id": "univer",
   "name": "Univer",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "minAppVersion": "1.6.0",
-  "description": "Open, edit and create Univer spreadsheets (.usheet) directly inside Obsidian.",
+  "description": "Open, edit and create Univer spreadsheets (.usheet) and relational tables (.ubase) inside Obsidian.",
   "author": "DreamNum",
   "authorUrl": "https://github.com/dream-num",
   "fundingUrl": "https://opencollective.com/univer",

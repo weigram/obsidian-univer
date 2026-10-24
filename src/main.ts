@@ -3,6 +3,7 @@ import { univerIcon } from './icon'
 import { isChinese } from './lang'
 import { DEFAULT_SETTINGS, type SheetViewState, type UniverSettings } from './settings'
 import { UniverSettingTab } from './settingsTab'
+import { BASE_VIEW_TYPE, UBaseView } from './baseView'
 import { USheetView, VIEW_TYPE } from './view'
 
 import './styles/univer.css'
@@ -18,6 +19,9 @@ export default class UniverPlugin extends Plugin {
     this.registerView(VIEW_TYPE, leaf => new USheetView(leaf, this))
     this.registerExtensions(['usheet'], VIEW_TYPE)
 
+    this.registerView(BASE_VIEW_TYPE, leaf => new UBaseView(leaf, this))
+    this.registerExtensions(['ubase', 'bases'], BASE_VIEW_TYPE)
+
     this.addRibbonIcon('univer', this.t('新建表格', 'New spreadsheet'), () => {
       void this.createSpreadsheet()
     })
@@ -26,6 +30,12 @@ export default class UniverPlugin extends Plugin {
       id: 'create-spreadsheet',
       name: this.t('新建表格', 'New spreadsheet'),
       callback: () => void this.createSpreadsheet(),
+    })
+
+    this.addCommand({
+      id: 'create-base',
+      name: this.t('新建多维表格', 'New relational table'),
+      callback: () => void this.createBase(),
     })
 
     this.addSettingTab(new UniverSettingTab(this.app, this))
@@ -45,7 +55,7 @@ export default class UniverPlugin extends Plugin {
   }
 
   async loadSettings(): Promise<void> {
-    const loaded = (await this.loadData() ?? {}) as { language?: unknown, viewStates?: unknown }
+    const loaded = (await this.loadData() ?? {}) as { language?: unknown, viewStates?: unknown, basesLicense?: unknown }
     const language = loaded.language
 
     // v1 stored upper-case language codes; keep existing vaults working.
@@ -56,6 +66,7 @@ export default class UniverPlugin extends Plugin {
           ? 'en'
           : 'auto',
       viewStates: this.parseViewStates(loaded.viewStates),
+      basesLicense: typeof loaded.basesLicense === 'string' ? loaded.basesLicense : '',
     }
   }
 
@@ -160,10 +171,12 @@ export default class UniverPlugin extends Plugin {
    * (currently only the UI language can change).
    */
   refreshOpenViews(): void {
-    for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE)) {
-      const view = leaf.view
-      if (view instanceof USheetView)
-        view.rerender()
+    for (const type of [VIEW_TYPE, BASE_VIEW_TYPE]) {
+      for (const leaf of this.app.workspace.getLeavesOfType(type)) {
+        const view = leaf.view
+        if (view instanceof USheetView || view instanceof UBaseView)
+          view.rerender()
+      }
     }
   }
 
@@ -188,6 +201,33 @@ export default class UniverPlugin extends Plugin {
     catch (error) {
       console.error('[univer] failed to create spreadsheet', error)
       new Notice(this.t('无法创建表格文件', 'Could not create spreadsheet'))
+      return
+    }
+
+    await this.app.workspace.getLeaf('tab').openFile(file)
+  }
+
+  private async createBase(): Promise<void> {
+    const activeFile = this.app.workspace.getActiveFile()
+    const folder = activeFile
+      ? this.app.fileManager.getNewFileParent(activeFile.path)
+      : this.app.vault.getRoot()
+
+    const baseName = isChinese() ? '未命名多维表格' : 'Untitled base'
+    let path = normalizePath(`${folder.path}/${baseName}.ubase`)
+    let index = 1
+    while (this.app.vault.getAbstractFileByPath(path)) {
+      path = normalizePath(`${folder.path}/${baseName} ${index}.ubase`)
+      index += 1
+    }
+
+    let file: TFile
+    try {
+      file = await this.app.vault.create(path, '')
+    }
+    catch (error) {
+      console.error('[univer] failed to create base', error)
+      new Notice(this.t('无法创建多维表格文件', 'Could not create relational table'))
       return
     }
 

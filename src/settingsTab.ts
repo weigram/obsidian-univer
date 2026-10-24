@@ -32,5 +32,24 @@ export class UniverSettingTab extends PluginSettingTab {
           await this.plugin.saveSettings()
           this.plugin.refreshOpenViews()
         }))
+
+    new Setting(containerEl)
+      .setName(zh ? 'Univer Bases 授权' : 'Univer Bases license')
+      .setDesc(zh
+        ? 'Univer Bases（关系表/多维表格）属于 Univer Pro。粘贴 license 文本以解除评估模式水印；留空则使用评估模式。内容只保存在本地 data.json。'
+        : 'Univer Bases (relational table) is part of Univer Pro. Paste the license text to unlock evaluation mode; leave empty to stay in evaluation mode. It is stored only in the local data.json.')
+      .addTextArea(textArea => textArea
+        .setValue(this.plugin.settings.basesLicense)
+        .setPlaceholder('-----BEGIN LICENSE-----')
+        .onChange(async (value) => {
+          this.plugin.settings.basesLicense = value
+          await this.plugin.saveSettings()
+        }))
+      .addButton(button => button
+        .setButtonText(zh ? '应用' : 'Apply')
+        .onClick(async () => {
+          await this.plugin.saveSettings()
+          this.plugin.refreshOpenViews()
+        }))
   }
 }

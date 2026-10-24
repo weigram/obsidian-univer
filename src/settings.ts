@@ -23,9 +23,15 @@ export interface UniverSettings {
    * place. Stored in the plugin's data.json, not in the sheet itself.
    */
   viewStates: Record<string, SheetViewState>
+  /**
+   * Univer Bases (relational table) license text. Empty means evaluation mode.
+   * Kept in the plugin's data.json and never committed to the repository.
+   */
+  basesLicense: string
 }
 
 export const DEFAULT_SETTINGS: UniverSettings = {
   language: 'auto',
   viewStates: {},
+  basesLicense: '',
 }

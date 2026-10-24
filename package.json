@@ -1,9 +1,9 @@
 {
   "name": "univer",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "packageManager": "pnpm@9.4.0",
-  "description": "Open, edit and create Univer spreadsheets (.usheet) directly inside Obsidian.",
+  "description": "Open, edit and create Univer spreadsheets (.usheet) and relational tables (.ubase) inside Obsidian.",
   "author": "DreamNum",
   "license": "Apache-2.0",
   "keywords": [
@@ -22,10 +22,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@univerjs-pro/bases": "1.2.0",
+    "@univerjs-pro/bases-ui": "1.2.0",
+    "@univerjs-pro/engine-formula": "1.2.0",
+    "@univerjs-pro/license": "1.2.0",
     "@univerjs/core": "1.2.0",
+    "@univerjs/design": "1.2.0",
+    "@univerjs/engine-render": "1.2.0",
     "@univerjs/preset-sheets-core": "1.2.0",
     "@univerjs/presets": "1.2.0",
     "@univerjs/sheets": "1.2.0",
+    "@univerjs/ui": "1.2.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "rxjs": "7.8.2"

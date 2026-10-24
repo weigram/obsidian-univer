@@ -1,3 +1,14 @@
+# 2.1.0
+
+### Features
+
+* add Univer Bases (relational table) support for `.ubase` / `.bases` files
+* new "New relational table" command and view
+* optional Univer Bases license in settings; evaluation mode without one
+* bundle `@univerjs-pro/bases`, `bases-ui`, `license` and `engine-formula` 1.2.0
+
+> Univer Bases is part of Univer Pro. Keep this repository private; do not redistribute the Pro packages without a commercial license.
+
 # 2.0.0
 
 ### Features

@@ -36,3 +36,7 @@ backup
 
 # sample / personal spreadsheets
 *.usheet
+
+# Univer Bases data files
+*.ubase
+*.bases
