@@ -42,7 +42,7 @@ export class USheetView extends TextFileView {
   private lastUndoCount = 0
   private lastRedoCount = 0
   private lastSerialized: string | null = null
-  private dirty = false
+  private contentDirty = false
   private stateSaveTimer: number | null = null
   private restoreTimer: number | null = null
   private stateDirty = false
@@ -97,14 +97,14 @@ export class USheetView extends TextFileView {
     // Untouched files stay byte-for-byte identical: Obsidian asks for the
     // view data when a tab is closed, and serializing here would rewrite the
     // whole file (and trigger a sync) for no reason.
-    if (!this.dirty && this.data)
+    if (!this.contentDirty && this.data)
       return this.data
 
     try {
       const json = JSON.stringify(this.workbook.save())
       this.data = json
       this.lastSerialized = json
-      this.dirty = false
+      this.contentDirty = false
       return json
     }
     catch (error) {
@@ -123,7 +123,7 @@ export class USheetView extends TextFileView {
 
     // Only flush when something actually changed. Re-saving an untouched file
     // would rewrite it in the current Univer format for no reason.
-    if (this.dirty && this.workbook && this.file) {
+    if (this.contentDirty && this.workbook && this.file) {
       try {
         this.data = this.getViewData()
         await this.save()
@@ -202,13 +202,13 @@ export class USheetView extends TextFileView {
 
       this.lastUndoCount = status.undos
       this.lastRedoCount = status.redos
-      this.dirty = true
+      this.contentDirty = true
       this.requestSave()
     })
 
     // A brand new file is empty until it is first saved.
     if (!raw.trim()) {
-      this.dirty = true
+      this.contentDirty = true
       this.requestSave()
     }
 
@@ -385,6 +385,6 @@ export class USheetView extends TextFileView {
     this.univer = null
     this.univerAPI = null
     this.workbook = null
-    this.dirty = false
+    this.contentDirty = false
   }
 }
