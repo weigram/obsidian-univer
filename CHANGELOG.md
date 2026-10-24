@@ -1,4 +1,17 @@
+# 2.0.0
 
+### Features
+
+* upgrade to Univer 1.2.0 (preset architecture) while keeping the `.usheet` snapshot format
+* spreadsheet-only plugin: documents, Excel import/export and collaboration are removed
+* compact single-row toolbar, formula bar, sheet tabs and zoom controls
+* remember the active sheet, scroll position and zoom per file
+* merge Obsidian's status bar into the single-row sheet footer, before the zoom controls
+* compact toolbar: 14px icons, 13px labels, 22px buttons and a 36px ribbon row to match the 0.2.x UI
+* light/dark theme support that follows Obsidian
+* Chinese/English UI that follows Obsidian or can be chosen in the settings
+* locale of the Univer UI can be switched without restarting Obsidian
+* safer loading: invalid `.usheet` files show an error instead of being overwritten
 
 ## [1.1.5](https://github.com/dream-num/obsidian-univer/compare/1.1.4...1.1.5) (2024-09-13)
 

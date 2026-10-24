@@ -1,36 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "jsx": "preserve",
-    "lib": [
-      "DOM",
-      "ES5",
-      "ES6",
-      "ES7",
-      "ESNext",
-      "DOM.Iterable",
-      "WebWorker"
-    ],
-    "experimentalDecorators": true,
-    "baseUrl": ".",
+    "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "node",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "strictNullChecks": true,
+    "moduleResolution": "bundler",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "jsx": "react-jsx",
+    "strict": true,
     "noImplicitAny": true,
-    "importHelpers": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
+    "strictNullChecks": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "isolatedModules": false
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*.ts", "vite.config.ts"]
 }

@@ -26,3 +26,13 @@ dist
 
 .env
 
+
+# local test vaults / backups
+test-vault
+backup
+
+# pnpm's local store (depends on the shell's pnpm configuration)
+.pnpm-store
+
+# sample / personal spreadsheets
+*.usheet

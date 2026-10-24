@@ -1,0 +1,290 @@
+/* --------------------------------------------------------------------------
+ * Layout
+ * ----------------------------------------------------------------------- */
+
+.workspace-leaf-content[data-type='univer-sheet'] .view-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.univer-view-content {
+  height: 100%;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.univer-app {
+  width: 100%;
+  height: 100%;
+}
+
+.univer-app > div {
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+ * Keep Obsidian's global form styles from leaking into Univer's UI
+ * ----------------------------------------------------------------------- */
+
+.univer-app button,
+.univer-app input,
+.univer-app textarea,
+.univer-app select {
+  box-shadow: none;
+  font-family: inherit;
+}
+
+.univer-app button:focus-visible,
+.univer-app input:focus-visible {
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+ * Loading / error state
+ * ----------------------------------------------------------------------- */
+
+.univer-error {
+  max-width: 560px;
+  margin: 12vh auto 0;
+  padding: 20px 24px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-secondary);
+}
+
+.univer-error h3 {
+  margin: 0 0 8px;
+}
+
+.univer-error p {
+  margin: 6px 0;
+  color: var(--text-muted);
+}
+
+.univer-error-hint {
+  font-family: var(--font-monospace);
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* --------------------------------------------------------------------------
+ * Dark mode polish
+ *
+ * Univer 1.x derives most colours from CSS variables, but a few toolbars keep
+ * a hard-coded dark text colour. Nudge those towards Obsidian's theme.
+ * ----------------------------------------------------------------------- */
+
+.theme-dark .univer-app [data-u-comp='formula-bar'] {
+  border-color: var(--background-modifier-border);
+}
+
+.theme-dark .univer-app [data-u-comp='formula-bar'] input {
+  color: var(--text-normal);
+}
+
+.theme-dark .univer-app [data-u-comp='ribbon-toolbar'] {
+  color: var(--text-normal);
+}
+
+.theme-dark .univer-app [data-u-comp='ribbon-toolbar'] button:disabled {
+  color: var(--text-faint) !important;
+  opacity: 0.55;
+}
+
+
+/* --------------------------------------------------------------------------
+ * Merge Obsidian's status bar into Univer's footer row
+ *
+ * Obsidian renders the status bar as a fixed overlay at the bottom of the
+ * window, which otherwise adds a second row under the sheet tabs. When a
+ * spreadsheet is the active view we move it into the 36px footer row, just
+ * before Univer's zoom controls.
+ * ----------------------------------------------------------------------- */
+
+body.univer-sheet-active .status-bar {
+  position: fixed !important;
+  right: var(--univer-status-right, 320px) !important;
+  bottom: var(--univer-status-bottom, 5px) !important;
+  height: 27px;
+  max-width: 380px;
+  margin: 0;
+  padding: 0 8px;
+  overflow: hidden;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+  z-index: 16;
+}
+
+body.univer-sheet-active .status-bar .status-bar-item {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+body.univer-sheet-active.univer-status-narrow .status-bar {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+ * Compact toolbar
+ *
+ * Univer 1.x ships slightly larger toolbar glyphs than 0.2.x while keeping
+ * the same 16px box. Scale them down (and tighten the ribbon row) so the
+ * toolbar matches the previous plugin.
+ * ----------------------------------------------------------------------- */
+
+.univer-app [data-u-comp='ribbon-toolbar'] svg {
+  width: 14px;
+  height: 14px;
+}
+
+.univer-app [data-u-comp='ribbon-toolbar'] button {
+  height: 22px;
+  min-width: 22px;
+}
+
+.univer-app [data-u-comp='ribbon-toolbar'] .univer-toolbar-selector-root {
+  height: 22px;
+}
+
+.univer-app header .univer-h-10 {
+  height: 36px;
+}
+
+.univer-app [data-u-comp='formula-bar'] svg {
+  width: 14px;
+  height: 14px;
+}
+
+.univer-app footer svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------------------------
+ * Toolbar typography
+ *
+ * Univer 1.x uses 14px labels; 0.2.x used 13px. Keep the ribbon labels and
+ * dropdown menus at the previous size so they do not look oversized next to
+ * the compact icons.
+ * ----------------------------------------------------------------------- */
+
+.univer-app [data-u-comp='ribbon-toolbar'],
+.univer-app [data-u-comp='ribbon-toolbar'] * {
+  font-size: 13px;
+}
+
+.univer-app [data-u-comp='formula-bar'] input,
+.univer-app [data-u-comp='formula-bar'] textarea {
+  font-size: 13px;
+}
+
+.univer-app footer,
+.univer-app footer * {
+  font-size: 13px;
+}
+
+body .univer-popup,
+body .univer-popup *,
+body [data-radix-menu-content],
+body [data-radix-menu-content] * {
+  font-size: 13px;
+}
+
+/* --------------------------------------------------------------------------
+ * Toolbar toggle buttons
+ *
+ * Obsidian's global `button` rules paint every Univer toolbar button with the
+ * theme's button background, so Bold/Italic/etc. look pressed all the time.
+ * Strip that background and render the pressed state from `aria-pressed`,
+ * which Univer keeps in sync with the selected cell's format.
+ * ----------------------------------------------------------------------- */
+
+.univer-app [data-u-comp='ribbon-toolbar'] button {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.univer-app [data-u-comp='ribbon-toolbar'] button:hover:not(:disabled) {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+.univer-app [data-u-comp='ribbon-toolbar'] button[aria-pressed='true'] {
+  background-color: rgba(var(--mono-rgb-100, 0, 0, 0), 0.12) !important;
+}
+
+.univer-app [data-u-comp='ribbon-toolbar'] button[aria-pressed='true']:hover {
+  background-color: rgba(var(--mono-rgb-100, 0, 0, 0), 0.16) !important;
+}
+
+/* --------------------------------------------------------------------------
+ * Ribbon overflow popover (the "more" panel)
+ *
+ * It is a Radix popover rendered outside `.univer-app`; its labels default to
+ * 16px and Obsidian paints its icon buttons with theme backgrounds.
+ * ----------------------------------------------------------------------- */
+
+body [data-slot='popover-content'],
+body [data-slot='popover-content'] * {
+  font-size: 13px;
+}
+
+body [data-slot='popover-content'] svg {
+  width: 14px;
+  height: 14px;
+}
+
+body [data-slot='popover-content'] button {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+body [data-slot='popover-content'] button:hover:not(:disabled) {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+/* --------------------------------------------------------------------------
+ * Footer buttons
+ *
+ * The sheet-bar add button, grid toggle and zoom controls are also <button>s,
+ * so Obsidian paints them with the theme's raised button style. Flatten them
+ * and rebuild the pressed state from `aria-pressed` (the zoom slider thumb is
+ * a button too and must keep its white fill).
+ * ----------------------------------------------------------------------- */
+
+.univer-app footer button:not([aria-label='缩放']) {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.univer-app footer button:not([aria-label='缩放']):hover:not(:disabled) {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+.univer-app footer button[aria-pressed='true'] {
+  background-color: rgba(var(--mono-rgb-100, 0, 0, 0), 0.12) !important;
+}
+
+/* --------------------------------------------------------------------------
+ * Ribbon overflow popover: wrap its button groups
+ *
+ * Radix sizes the popover to `max-content`, so on wide windows the function
+ * categories stretch into one very long row. Cap the width and let each row
+ * wrap into a compact grid instead.
+ * ----------------------------------------------------------------------- */
+
+[data-radix-popper-content-wrapper]:has([data-slot='popover-content']) {
+  width: min(760px, calc(100vw - 32px)) !important;
+  min-width: 0 !important;
+}
+
+body [data-slot='popover-content'],
+body [data-slot='popover-content'] > div {
+  width: 100% !important;
+}
+
+body [data-slot='popover-content'] > div > div {
+  flex-wrap: wrap !important;
+  align-content: flex-start;
+}

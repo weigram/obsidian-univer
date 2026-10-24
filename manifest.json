@@ -1,9 +1,9 @@
 {
   "id": "univer",
   "name": "Univer",
-  "version": "1.1.5",
-  "minAppVersion": "1.5.11",
-  "description": "Create, edit, and view spreadsheets and documents in various formats like Excel and Word directly within your knowledge base.",
+  "version": "2.0.0",
+  "minAppVersion": "1.6.0",
+  "description": "Open, edit and create Univer spreadsheets (.usheet) directly inside Obsidian.",
   "author": "DreamNum",
   "authorUrl": "https://github.com/dream-num",
   "fundingUrl": "https://opencollective.com/univer",
