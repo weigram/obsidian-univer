@@ -288,3 +288,33 @@ body [data-slot='popover-content'] > div > div {
   flex-wrap: wrap !important;
   align-content: flex-start;
 }
+
+/* --------------------------------------------------------------------------
+ * Univer Bases (relational table)
+ *
+ * Bases ships its own 14px / 16px UI, which looks larger than the compact
+ * sheet toolbar. Bring its text, icons and toolbar buttons in line with the
+ * spreadsheet view.
+ * ----------------------------------------------------------------------- */
+
+.univer-base-app,
+.univer-base-app * {
+  font-size: 13px;
+}
+
+.univer-base-app button svg,
+.univer-base-app [role='button'] svg,
+.univer-base-app [data-u-comp='base-toolbar'] svg {
+  width: 14px;
+  height: 14px;
+}
+
+.univer-base-app [data-u-comp='base-toolbar'] {
+  height: 36px;
+  min-height: 36px;
+}
+
+.univer-base-app [data-u-comp='base-toolbar'] button {
+  height: 24px;
+  min-height: 24px;
+}
