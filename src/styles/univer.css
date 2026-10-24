@@ -318,3 +318,45 @@ body [data-slot='popover-content'] > div > div {
   height: 24px;
   min-height: 24px;
 }
+
+/* --------------------------------------------------------------------------
+ * Bases buttons and popup menus
+ *
+ * Obsidian's global button rule paints every Base button; only the buttons
+ * that Univer marks as `univer-bg-transparent` should be flattened. Primary
+ * buttons (e.g. 提交) keep their colour. The same applies to Base menus, which
+ * live in a body-level `base-global-menu` portal.
+ * ----------------------------------------------------------------------- */
+
+.univer-base-app button.univer-bg-transparent {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.univer-base-app button.univer-bg-transparent:hover:not(:disabled) {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+.univer-base-app button[aria-pressed='true'] {
+  background-color: rgba(var(--mono-rgb-100, 0, 0, 0), 0.12) !important;
+}
+
+[data-u-comp='base-global-menu'],
+[data-u-comp='base-global-menu'] * {
+  font-size: 13px !important;
+}
+
+[data-u-comp='base-global-menu'] button.univer-bg-transparent {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+[data-u-comp='base-global-menu'] button.univer-bg-transparent:hover:not(:disabled) {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+[data-u-comp='base-global-menu'] button svg,
+[data-u-comp='base-global-menu'] [role='button'] svg {
+  width: 14px;
+  height: 14px;
+}
