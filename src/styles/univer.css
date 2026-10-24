@@ -235,15 +235,6 @@ body [data-slot='popover-content'] svg {
   height: 14px;
 }
 
-body [data-slot='popover-content'] button {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-body [data-slot='popover-content'] button:hover:not(:disabled) {
-  background-color: var(--background-modifier-hover) !important;
-}
-
 /* --------------------------------------------------------------------------
  * Footer buttons
  *
@@ -274,17 +265,17 @@ body [data-slot='popover-content'] button:hover:not(:disabled) {
  * wrap into a compact grid instead.
  * ----------------------------------------------------------------------- */
 
-[data-radix-popper-content-wrapper]:has([data-slot='popover-content']) {
+[data-radix-popper-content-wrapper]:has([data-slot='popover-content'] [data-u-command^='formula-ui.operation.insert-function']) {
   width: min(760px, calc(100vw - 32px)) !important;
   min-width: 0 !important;
 }
 
-body [data-slot='popover-content'],
-body [data-slot='popover-content'] > div {
+[data-slot='popover-content']:has([data-u-command^='formula-ui.operation.insert-function']),
+[data-slot='popover-content']:has([data-u-command^='formula-ui.operation.insert-function']) > div {
   width: 100% !important;
 }
 
-body [data-slot='popover-content'] > div > div {
+[data-slot='popover-content']:has([data-u-command^='formula-ui.operation.insert-function']) > div > div {
   flex-wrap: wrap !important;
   align-content: flex-start;
 }
@@ -335,10 +326,6 @@ body [data-slot='popover-content'] > div > div {
 
 .univer-base-app button.univer-bg-transparent:hover:not(:disabled) {
   background-color: var(--background-modifier-hover) !important;
-}
-
-.univer-base-app button[aria-pressed='true'] {
-  background-color: rgba(var(--mono-rgb-100, 0, 0, 0), 0.12) !important;
 }
 
 [data-u-comp='base-global-menu'],
