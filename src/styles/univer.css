@@ -384,3 +384,22 @@ body [data-slot='popover-content'] svg {
 [data-u-comp='base-global-menu'] [role='menuitem'][aria-checked='true'] {
   background-color: transparent !important;
 }
+
+/* Primary Base buttons ("确认", "提交", ...) are Univer's blue buttons, but
+ * Obsidian's global button rule paints their background theme-grey. */
+.univer-base-app button.univer-bg-primary-600,
+[data-u-comp='base-global-menu'] button.univer-bg-primary-600 {
+  background-color: var(--interactive-accent) !important;
+  color: var(--text-on-accent) !important;
+}
+
+.univer-base-app button.univer-bg-primary-600:hover:not(:disabled),
+[data-u-comp='base-global-menu'] button.univer-bg-primary-600:hover:not(:disabled) {
+  background-color: var(--interactive-accent-hover) !important;
+}
+
+.univer-base-app button.univer-bg-primary-700,
+[data-u-comp='base-global-menu'] button.univer-bg-primary-700 {
+  background-color: var(--interactive-accent) !important;
+  color: var(--text-on-accent) !important;
+}
