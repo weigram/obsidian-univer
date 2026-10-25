@@ -1,25 +1,22 @@
-# Univer 2.0.0
+# Univer 2.1.0
 
-Spreadsheet-only Obsidian plugin powered by Univer **1.2.0**.
+Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0**.
 
-### Changes
+### Features
 
-- Upgrade to Univer 1.2.0 (preset architecture), keeping the `.usheet` JSON snapshot format
-- Spreadsheet-only: documents, Excel import/export and collaboration are removed
-- Compact single-row toolbar, formula bar, sheet tabs and zoom controls
-- Remember the active sheet, scroll position and zoom per file
-- Obsidian's status bar is merged into the single-row sheet footer, before the zoom controls
-- Compact toolbar: 14px icons, 13px labels, 22px buttons and a 36px ribbon row
-- Light/dark theme support, Chinese/English UI, locale switching without restart
-- Invalid `.usheet` files show an error instead of being overwritten
-- Fix saving of formatting/value edits (the view no longer shadows Obsidian's internal dirty flag)
+- Add Univer Bases (relational table) support for `.ubase` / `.bases` files
+- New "New relational table" command and folder-menu entries
+- Optional Univer Bases license in settings; evaluation mode without one
+- Single-select fields can auto-create a missing option from the record editor (press Enter)
+- Compact Bases UI: 13px labels, 14px icons, sheet-like toolbar and menus
+- Keep Base popups inside the window (select menus, record editor)
+- Hide Obsidian's backlink/word/character status bar in sheet and Base views
+- Restore Base primary/secondary button colours and flat menu rows
 
-### Compatibility
+### Dependencies
 
-- Obsidian **1.6.0+**, desktop only
-- Opens existing `.usheet` snapshots from Univer 0.2.x and 1.x
+- Univer 1.2.0
+- `@univerjs-pro/bases`, `bases-ui`, `license`, `engine-formula` 1.2.0
 
-### Installation
-
-Copy `main.js`, `manifest.json` and `styles.css` into
-`<vault>/.obsidian/plugins/univer/`, then enable the plugin.
+> Univer Bases is part of Univer Pro. Keep this repository private and do not
+> redistribute the Pro packages without a commercial license.
