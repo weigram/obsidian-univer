@@ -451,3 +451,9 @@ button.univer-bg-primary-50 {
 .univer-base-app [data-u-comp='base-main-area'] canvas {
   transform: translateY(2px);
 }
+
+/* Hide Obsidian's status bar (backlinks / words / characters) while a sheet
+ * is active, matching the Bases view. */
+body.univer-sheet-active .status-bar {
+  display: none;
+}
