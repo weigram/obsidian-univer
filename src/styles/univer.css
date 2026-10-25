@@ -368,6 +368,7 @@ body [data-slot='popover-content'] svg {
  * centres the tab label by default, so long view names run under the dots. */
 .univer-base-app [data-u-comp='base-view-tab'] {
   justify-content: flex-start !important;
+  padding-right: 44px !important;
 }
 
 .univer-base-app [data-u-comp='base-view-tab'] > span:last-child {
