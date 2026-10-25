@@ -431,8 +431,8 @@ button.univer-bg-primary-50 {
 /* Compact the sidebar "新建" button and match the 40px record footer height,
  * so the line above it aligns with the grid footer. */
 [data-u-comp='base-table-sidebar'] footer {
-  height: 40px !important;
-  padding: 2px 8px 4px !important;
+  height: 45px !important;
+  padding: 7px 8px 4px !important;
   display: flex !important;
   align-items: flex-start !important;
 }
