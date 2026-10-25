@@ -347,3 +347,19 @@ body [data-slot='popover-content'] svg {
   width: 14px;
   height: 14px;
 }
+
+/* Restore Univer's own `bg-gray-0` fill for Base buttons (Obsidian's global
+ * button rule otherwise turns the field-type select and the active view tab
+ * grey). */
+.univer-base-app button.univer-bg-gray-0,
+[data-u-comp='base-global-menu'] button.univer-bg-gray-0 {
+  background-color: var(--background-primary) !important;
+}
+
+.univer-base-app [data-u-comp='base-view-tab'].univer-bg-gray-0 {
+  box-shadow: inset 0 -2px 0 var(--interactive-accent) !important;
+}
+
+[data-u-comp='base-field-config-panel'] [data-u-comp='select']:hover {
+  background-color: var(--background-modifier-hover) !important;
+}
