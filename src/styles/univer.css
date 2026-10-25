@@ -404,3 +404,14 @@ body [data-slot='popover-content'] svg {
   background-color: var(--interactive-accent) !important;
   color: var(--text-on-accent) !important;
 }
+
+/* Dialog buttons live in a body-level portal, outside `.univer-base-app` and
+ * `base-global-menu`. Honour Univer's own secondary/primary button fills. */
+button.univer-bg-gray-0 {
+  background-color: var(--background-primary) !important;
+}
+
+button.univer-bg-primary-600 {
+  background-color: var(--interactive-accent) !important;
+  color: var(--text-on-accent) !important;
+}
