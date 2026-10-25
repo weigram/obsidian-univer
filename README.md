@@ -9,6 +9,7 @@ Obsidian plugin for Univer spreadsheets and relational tables, powered by Univer
 ## What it does
 
 - Opens, edits and saves `.usheet` spreadsheets and `.ubase` relational tables inside Obsidian.
+- Single-select fields can create a missing option directly from the record editor (press Enter).
 - Spreadsheet-only interface: compact toolbar, formula bar, sheet tabs and zoom.
 - Keeps cell formatting, formulas, multiple sheets and row/column sizes.
 - Remembers the active sheet, scroll position and zoom per file, and follows

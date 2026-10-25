@@ -44,6 +44,7 @@ export class UBaseView extends TextFileView {
   private lastSerialized: string | null = null
   private contentDirty = false
   private checkTimer: number | null = null
+  private pendingSelectFieldName: string | null = null
 
   constructor(leaf: WorkspaceLeaf, plugin: UniverPlugin) {
     super(leaf)
@@ -67,6 +68,8 @@ export class UBaseView extends TextFileView {
     this.registerEvent(this.app.workspace.on('css-change', () => {
       this.univerAPI?.toggleDarkMode(isDarkTheme())
     }))
+    this.registerDomEvent(document, 'pointerdown', event => this.rememberSelectField(event), true)
+    this.registerDomEvent(document, 'keydown', event => this.handleSelectKeydown(event), true)
   }
 
   override setViewData(data: string, clear: boolean): void {
@@ -181,6 +184,88 @@ export class UBaseView extends TextFileView {
       this.contentDirty = true
       this.requestSave()
     }
+  }
+
+  /**
+   * Remember which single-select field opened the record editor. The floating
+   * editor is rendered in a body-level portal and carries no field id, so the
+   * row label is the only reliable link back to the field.
+   */
+  private rememberSelectField(event: Event): void {
+    const target = event.target
+    if (!(target instanceof HTMLElement))
+      return
+
+    const row = target.closest<HTMLElement>('[data-field-type="singleSelect"]')
+    if (!row)
+      return
+
+    const label = (row.parentElement ?? row)
+      .querySelector<HTMLElement>('button[aria-label^="编辑 "], button[aria-label^="Edit "]')
+    const labelText = label?.getAttribute('aria-label')?.replace(/^(编辑|Edit)\s+/i, '')
+    if (labelText)
+      this.pendingSelectFieldName = labelText
+  }
+
+  /**
+   * Univer Bases' single-select editor only filters existing options. When the
+   * user types a value that does not exist and presses Enter, add the option to
+   * the field and select it in the open editor.
+   */
+  private handleSelectKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' || !(event.target instanceof HTMLInputElement))
+      return
+
+    const input = event.target
+    if (!input.placeholder.includes('选择或添加') && !input.placeholder.toLowerCase().includes('select or add'))
+      return
+    if (!input.closest('[data-u-comp="base-record-detail-floating-editor"]'))
+      return
+
+    const value = input.value.trim()
+    const fieldName = this.pendingSelectFieldName
+    if (!value || !fieldName || !this.base)
+      return
+
+    const field = this.findSelectField(fieldName)
+    if (!field)
+      return
+
+    const config = field.getConfig() as { options?: Array<{ id: string, name: string, color?: string } | string> } & Record<string, unknown>
+    const options = (config.options ?? []).map(option => typeof option === 'string' ? { id: option, name: option } : option)
+    if (options.some(option => option.name === value))
+      return
+
+    const option = {
+      id: `opt-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
+      name: value,
+      color: '#3b82f6',
+    }
+    if (!field.setConfig({ ...config, options: [...options, option] }))
+      return
+
+    event.preventDefault()
+    event.stopPropagation()
+
+    // The option list is controlled by the field config, so let it re-render
+    // and then select the freshly added option.
+    window.setTimeout(() => {
+      const editor = document.querySelector('[data-u-comp="base-select-cell-editor"]')
+      if (!editor)
+        return
+      const candidate = Array.from(editor.querySelectorAll<HTMLElement>('button, [role="option"]'))
+        .find(element => element.textContent?.trim() === value)
+      candidate?.click()
+    }, 180)
+  }
+
+  private findSelectField(name: string) {
+    for (const table of this.base?.getTables() ?? []) {
+      const field = table.getFields().find(item => item.getName() === name)
+      if (field)
+        return field
+    }
+    return null
   }
 
   private scheduleSaveCheck(): void {
