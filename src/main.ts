@@ -51,7 +51,7 @@ export default class UniverPlugin extends Plugin {
   onunload(): void {
     if (this.viewStateSaveTimer !== null)
       window.clearTimeout(this.viewStateSaveTimer)
-    document.body.classList.remove('univer-sheet-active', 'univer-status-narrow')
+    document.body.classList.remove('univer-sheet-active', 'univer-base-active', 'univer-status-narrow')
   }
 
   async loadSettings(): Promise<void> {
@@ -116,8 +116,10 @@ export default class UniverPlugin extends Plugin {
   syncStatusBarLayout(): void {
     const activeView = this.app.workspace.activeLeaf?.view
     const isSheet = activeView?.getViewType?.() === VIEW_TYPE
+    const isBase = activeView?.getViewType?.() === BASE_VIEW_TYPE
 
     document.body.classList.toggle('univer-sheet-active', isSheet)
+    document.body.classList.toggle('univer-base-active', isBase)
     document.body.classList.toggle('univer-status-narrow', false)
 
     if (!isSheet || !(activeView instanceof USheetView))

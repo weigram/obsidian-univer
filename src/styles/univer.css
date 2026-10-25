@@ -415,3 +415,9 @@ button.univer-bg-primary-600 {
   background-color: var(--interactive-accent) !important;
   color: var(--text-on-accent) !important;
 }
+
+/* The Obsidian status bar (backlinks / words / characters) duplicates the
+ * Bases footer and is not useful in a Base view. */
+body.univer-base-active .status-bar {
+  display: none;
+}
