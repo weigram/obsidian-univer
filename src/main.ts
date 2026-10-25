@@ -1,4 +1,4 @@
-import { addIcon, normalizePath, Notice, Plugin, TFile } from 'obsidian'
+import { addIcon, normalizePath, Notice, Plugin, TFile, TFolder } from 'obsidian'
 import { univerIcon } from './icon'
 import { isChinese } from './lang'
 import { DEFAULT_SETTINGS, type SheetViewState, type UniverSettings } from './settings'
@@ -37,6 +37,23 @@ export default class UniverPlugin extends Plugin {
       name: this.t('新建多维表格', 'New relational table'),
       callback: () => void this.createBase(),
     })
+
+    this.registerEvent(this.app.workspace.on('file-menu', (menu, file) => {
+      if (!(file instanceof TFolder))
+        return
+
+      menu.addItem(item => item
+        .setSection('action-primary')
+        .setTitle(this.t('新建 Univer 表格', 'New Univer spreadsheet'))
+        .setIcon('univer')
+        .onClick(() => void this.createSpreadsheet(file)))
+
+      menu.addItem(item => item
+        .setSection('action-primary')
+        .setTitle(this.t('新建 Univer 多维表', 'New Univer relational table'))
+        .setIcon('univer')
+        .onClick(() => void this.createBase(file)))
+    }))
 
     this.addSettingTab(new UniverSettingTab(this.app, this))
 
@@ -182,11 +199,11 @@ export default class UniverPlugin extends Plugin {
     }
   }
 
-  private async createSpreadsheet(): Promise<void> {
+  private async createSpreadsheet(parent?: TFolder): Promise<void> {
     const activeFile = this.app.workspace.getActiveFile()
-    const folder = activeFile
+    const folder = parent ?? (activeFile
       ? this.app.fileManager.getNewFileParent(activeFile.path)
-      : this.app.vault.getRoot()
+      : this.app.vault.getRoot())
 
     const baseName = isChinese() ? '未命名表格' : 'Untitled'
     let path = normalizePath(`${folder.path}/${baseName}.usheet`)
@@ -209,11 +226,11 @@ export default class UniverPlugin extends Plugin {
     await this.app.workspace.getLeaf('tab').openFile(file)
   }
 
-  private async createBase(): Promise<void> {
+  private async createBase(parent?: TFolder): Promise<void> {
     const activeFile = this.app.workspace.getActiveFile()
-    const folder = activeFile
+    const folder = parent ?? (activeFile
       ? this.app.fileManager.getNewFileParent(activeFile.path)
-      : this.app.vault.getRoot()
+      : this.app.vault.getRoot())
 
     const baseName = isChinese() ? '未命名多维表格' : 'Untitled base'
     let path = normalizePath(`${folder.path}/${baseName}.ubase`)
