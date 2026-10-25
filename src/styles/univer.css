@@ -244,16 +244,16 @@ body [data-slot='popover-content'] svg {
  * a button too and must keep its white fill).
  * ----------------------------------------------------------------------- */
 
-.univer-app footer button:not([aria-label='缩放']) {
+.univer-app:not(.univer-base-app) footer button:not([aria-label='缩放']) {
   background-color: transparent !important;
   box-shadow: none !important;
 }
 
-.univer-app footer button:not([aria-label='缩放']):hover:not(:disabled) {
+.univer-app:not(.univer-base-app) footer button:not([aria-label='缩放']):hover:not(:disabled) {
   background-color: var(--background-modifier-hover) !important;
 }
 
-.univer-app footer button[aria-pressed='true'] {
+.univer-app:not(.univer-base-app) footer button[aria-pressed='true'] {
   background-color: rgba(var(--mono-rgb-100, 0, 0, 0), 0.12) !important;
 }
 
