@@ -421,3 +421,9 @@ button.univer-bg-primary-600 {
 body.univer-base-active .status-bar {
   display: none;
 }
+
+/* Selected Base menu rows use `univer-bg-primary-50`, which Obsidian's global
+ * button rule paints grey. Leave only the check mark / accent text. */
+button.univer-bg-primary-50 {
+  background-color: transparent !important;
+}
