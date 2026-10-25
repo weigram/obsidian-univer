@@ -427,3 +427,21 @@ body.univer-base-active .status-bar {
 button.univer-bg-primary-50 {
   background-color: transparent !important;
 }
+
+/* Compact the sidebar "新建" button and match the 40px record footer height,
+ * so the line above it aligns with the grid footer. */
+[data-u-comp='base-table-sidebar'] footer {
+  height: 40px !important;
+  padding: 4px 8px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+[data-u-comp='base-table-sidebar-new-button'] {
+  height: 26px !important;
+  min-height: 26px !important;
+  width: auto !important;
+  min-width: 96px !important;
+  margin: 0 auto !important;
+  padding: 0 14px !important;
+}
