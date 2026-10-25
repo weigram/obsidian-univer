@@ -445,3 +445,9 @@ button.univer-bg-primary-50 {
   margin: 0 auto !important;
   padding: 0 14px !important;
 }
+
+/* The record footer is drawn into the Base canvas; nudge the canvas down by
+ * one pixel so its top rule lines up with the sidebar footer. */
+.univer-base-app [data-u-comp='base-main-area'] canvas {
+  transform: translateY(1px);
+}
