@@ -1,6 +1,7 @@
 import type { IBaseSnapshot } from '@univerjs/core'
+import { BaseFieldType } from '@univerjs/core'
 import type { FUniver } from '@univerjs/core/facade'
-import type { FBase } from '@univerjs-pro/bases/facade'
+import type { FBase, FBaseTable, FBaseTableField } from '@univerjs-pro/bases/facade'
 import type { Univer } from '@univerjs/presets'
 import type { WorkspaceLeaf } from 'obsidian'
 
@@ -45,6 +46,7 @@ export class UBaseView extends TextFileView {
   private contentDirty = false
   private checkTimer: number | null = null
   private pendingSelectFieldName: string | null = null
+  private syncingTimestamps = false
 
   constructor(leaf: WorkspaceLeaf, plugin: UniverPlugin) {
     super(leaf)
@@ -184,6 +186,14 @@ export class UBaseView extends TextFileView {
       this.contentDirty = true
       this.requestSave()
     }
+
+    // Existing Bases may not have the timestamp fields yet.
+    window.setTimeout(() => {
+      if (this.syncKanbanTimestamps()) {
+        this.contentDirty = true
+        this.requestSave()
+      }
+    }, 800)
   }
 
   /**
@@ -283,6 +293,11 @@ export class UBaseView extends TextFileView {
       return
 
     try {
+      if (this.syncKanbanTimestamps()) {
+        this.contentDirty = true
+        this.requestSave()
+      }
+
       const json = JSON.stringify(this.base.save())
       if (json !== this.lastSerialized) {
         this.contentDirty = true
@@ -292,6 +307,122 @@ export class UBaseView extends TextFileView {
     catch (error) {
       console.error('[univer] failed to read base snapshot', error)
     }
+  }
+
+  /**
+   * Maintain timestamp fields the user created by hand.
+   *
+   * - Any `date` field whose config has `defaultMode: 'recordCreatedAt'` is
+   *   backfilled from `record.createdAt`. Univer only evaluates that default
+   *   inside the field/date editors, so records created normally (and records
+   *   that already existed) would otherwise stay empty.
+   * - `完成时间` is set when a Kanban card enters `已完成`, and cleared when it
+   *   leaves. It is only touched when the field exists.
+   */
+  private syncKanbanTimestamps(): boolean {
+    if (!this.base || this.syncingTimestamps)
+      return false
+
+    this.syncingTimestamps = true
+    let changed = false
+
+    try {
+      for (const table of this.base.getTables()) {
+        this.fillRecordCreatedAtDefaults(table, () => {
+          changed = true
+        })
+
+        const kanban = table.getViews().find(view => view.getType() === 'kanban')
+        if (!kanban)
+          continue
+
+        const groupFieldId = (kanban.getConfig() as { groupFieldId?: string }).groupFieldId
+        if (!groupFieldId)
+          continue
+
+        const statusField = table.getFields().find(field => field.getId() === groupFieldId)
+        const statusConfig = statusField?.getConfig() as { options?: Array<{ id: string, name: string } | string> } | undefined
+        const doneOption = (statusConfig?.options ?? [])
+          .map(option => typeof option === 'string' ? { id: option, name: option } : option)
+          .find(option => option.name === '已完成')
+        if (!doneOption)
+          continue
+
+        const doneField = table.getFields().find(field =>
+          field.getName() === '完成时间' && field.getType() === BaseFieldType.Date)
+
+        for (const record of table.getRecords()) {
+          const values = record.getValues()
+
+          if (!doneField)
+            continue
+
+          const isDone = values[groupFieldId] === doneOption.id
+          const completedAt = values[doneField.getId()]
+          if (isDone && (completedAt == null || completedAt === '')) {
+            if (record.setValue(doneField.getId(), this.toBaseDate(Date.now(), doneField)))
+              changed = true
+          }
+          else if (!isDone && completedAt != null && completedAt !== '') {
+            if (record.setValue(doneField.getId(), null))
+              changed = true
+          }
+        }
+      }
+    }
+    catch (error) {
+      console.error('[univer] failed to sync Kanban timestamps', error)
+    }
+    finally {
+      this.syncingTimestamps = false
+    }
+
+    return changed
+  }
+
+  /**
+   * Backfill user-created `date` fields configured with the
+   * `recordCreatedAt` default mode. Only empty cells are written, so an
+   * explicit value is never overwritten.
+   */
+  private fillRecordCreatedAtDefaults(
+    table: FBaseTable,
+    onChange: () => void,
+  ): void {
+    const targets = table.getFields().filter((field) => {
+      if (field.getType() !== BaseFieldType.Date)
+        return false
+      const config = field.getConfig() as { defaultMode?: string }
+      return config.defaultMode === 'recordCreatedAt'
+    })
+
+    if (!targets.length)
+      return
+
+    for (const record of table.getRecords()) {
+      const values = record.getValues()
+      const createdAt = record.getRecord().createdAt
+      if (!createdAt)
+        continue
+
+      for (const field of targets) {
+        const current = values[field.getId()]
+        if (current != null && current !== '')
+          continue
+        if (record.setValue(field.getId(), this.toBaseDate(createdAt, field)))
+          onChange()
+      }
+    }
+  }
+
+  /**
+   * Convert a JS timestamp to the Excel serial used by Base date fields and
+   * follow the field's `includeTime` setting: date-only fields get an integer.
+   */
+  private toBaseDate(timestamp: number, field: FBaseTableField): number {
+    const serial = timestamp / 86_400_000 + 25_569
+    const config = field.getConfig() as { includeTime?: boolean }
+    return config.includeTime ? serial : Math.floor(serial)
   }
 
   private showError(): void {

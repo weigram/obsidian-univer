@@ -1,17 +1,30 @@
-# Univer 2.1.0
+# Univer 2.2.0
 
 Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0**.
 
-### Features
+### Relational tables (Univer Bases)
 
-- Add Univer Bases (relational table) support for `.ubase` / `.bases` files
-- New "New relational table" command and folder-menu entries
-- Optional Univer Bases license in settings; evaluation mode without one
-- Single-select fields can auto-create a missing option from the record editor (press Enter)
-- Compact Bases UI: 13px labels, 14px icons, sheet-like toolbar and menus
-- Keep Base popups inside the window (select menus, record editor)
-- Hide Obsidian's backlink/word/character status bar in sheet and Base views
-- Restore Base primary/secondary button colours and flat menu rows
+- New `.ubase` / `.bases` view, plus "New relational table" command and folder
+  right-click entries.
+- Records can be created and edited in the side panel; Kanban and calendar
+  views are available.
+- Single-select fields can create a missing option straight from the record
+  editor (press Enter).
+- Text fields grow to multiple lines instead of clipping.
+- A `date` field using the "record creation time" default is backfilled from
+  each record's creation timestamp.
+- A manually created `完成时间` date field is filled when a Kanban card enters
+  `已完成`, and cleared when it leaves.
+
+### UI polish
+
+- Compact Bases labels, icons and toolbar so they match the spreadsheet view.
+- Flat toolbar/menu buttons with a proper pressed state; primary buttons keep
+  their accent fill without an outline.
+- Fixed Base dialogs, menus, color picker and view tabs.
+- Base popups stay inside the window.
+- No outer scroll bar in the Base view, and Obsidian's status bar is hidden in
+  sheet and Base views.
 
 ### Dependencies
 

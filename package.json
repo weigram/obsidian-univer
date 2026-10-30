@@ -1,7 +1,7 @@
 {
   "name": "univer",
   "type": "module",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "packageManager": "pnpm@9.4.0",
   "description": "Open, edit and create Univer spreadsheets (.usheet) and relational tables (.ubase) inside Obsidian.",
   "author": "DreamNum",

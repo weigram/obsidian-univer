@@ -1,3 +1,21 @@
+# 2.2.0
+
+### Features
+
+* Univer Bases (relational table) view for `.ubase` / `.bases`, with Kanban and calendar views
+* New relational-table command and folder right-click entries
+* Single-select fields auto-create a missing option from the record editor
+* Text fields grow to multiple lines
+* Date fields using the record-creation-time default are backfilled
+* A manually created `完成时间` field is filled when a card enters `已完成`
+
+### UI
+
+* Compact Bases labels, icons, toolbar and menus
+* Flat buttons, correct primary-button colours, fixed dialogs and colour picker
+* Base popups stay inside the window; no outer scroll bar
+* Obsidian status bar hidden in sheet and Base views
+
 # 2.1.0
 
 ### Features
@@ -7,6 +25,8 @@
 * optional Univer Bases license in settings; evaluation mode without one
 * bundle `@univerjs-pro/bases`, `bases-ui`, `license` and `engine-formula` 1.2.0
 * single-select fields can auto-create a missing option from the record editor (Enter)
+* a manually created `完成时间` field is filled when a card enters `已完成` (respecting its date format)
+* date fields using the record-creation-time default are backfilled automatically
 
 > Univer Bases is part of Univer Pro. Keep this repository private; do not redistribute the Pro packages without a commercial license.
 

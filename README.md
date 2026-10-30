@@ -6,10 +6,15 @@ Obsidian plugin for Univer spreadsheets and relational tables, powered by Univer
 
 ![Univer spreadsheet inside Obsidian](./assets/screenshot.png)
 
+![Univer relational table inside Obsidian](./assets/bases.png)
+
 ## What it does
 
 - Opens, edits and saves `.usheet` spreadsheets and `.ubase` relational tables inside Obsidian.
 - Single-select fields can create a missing option directly from the record editor (press Enter).
+- If you create a `完成时间` date field manually, moving a card into `已完成` fills it using that field's format.
+- Text fields in the record panel grow with their content.
+- A `date` field with the "record creation time" default is backfilled from each record's creation timestamp.
 - Spreadsheet-only interface: compact toolbar, formula bar, sheet tabs and zoom.
 - Keeps cell formatting, formulas, multiple sheets and row/column sizes.
 - Remembers the active sheet, scroll position and zoom per file, and follows

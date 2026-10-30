@@ -392,6 +392,8 @@ body [data-slot='popover-content'] svg {
 [data-u-comp='base-global-menu'] button.univer-bg-primary-600 {
   background-color: var(--interactive-accent) !important;
   color: var(--text-on-accent) !important;
+  border-color: var(--interactive-accent) !important;
+  box-shadow: none !important;
 }
 
 .univer-base-app button.univer-bg-primary-600:hover:not(:disabled),
@@ -403,6 +405,8 @@ body [data-slot='popover-content'] svg {
 [data-u-comp='base-global-menu'] button.univer-bg-primary-700 {
   background-color: var(--interactive-accent) !important;
   color: var(--text-on-accent) !important;
+  border-color: var(--interactive-accent) !important;
+  box-shadow: none !important;
 }
 
 /* Dialog buttons live in a body-level portal, outside `.univer-base-app` and
@@ -414,6 +418,8 @@ button.univer-bg-gray-0 {
 button.univer-bg-primary-600 {
   background-color: var(--interactive-accent) !important;
   color: var(--text-on-accent) !important;
+  border-color: var(--interactive-accent) !important;
+  box-shadow: none !important;
 }
 
 /* The Obsidian status bar (backlinks / words / characters) duplicates the
@@ -463,4 +469,150 @@ body.univer-sheet-active .status-bar {
  * and drift off-screen. Drop containment only for leaves hosting a Base. */
 .workspace-leaf:has(.univer-base-app) {
   contain: none !important;
+}
+
+/* The canvas is nudged down by 2px to line up its footer; clip the Base
+ * viewport so that offset cannot create an outer scrollbar. */
+.univer-base-view,
+.workspace-leaf:has(.univer-base-app) {
+  overflow: hidden !important;
+}
+
+/* Base dialogs use Obsidian's heavy grey input focus ring; use the normal
+ * Univer border and the theme accent on focus instead. */
+.univer-base-app input,
+.univer-popup input {
+  border-color: var(--background-modifier-border) !important;
+  box-shadow: none !important;
+}
+
+.univer-base-app input:focus,
+.univer-popup input:focus {
+  border-color: var(--interactive-accent) !important;
+  box-shadow: 0 0 0 1px var(--interactive-accent) !important;
+}
+
+/* Base group/field dialogs are rendered in a body-level dialog portal. Remove
+ * Obsidian's focus ring/outline and use the accent border there too. */
+body.univer-base-active [role='dialog'] input,
+body.univer-base-active [role='alertdialog'] input,
+body.univer-base-active .univer-popup input {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--background-modifier-border) !important;
+}
+
+body.univer-base-active [role='dialog'] input:focus,
+body.univer-base-active [role='alertdialog'] input:focus,
+body.univer-base-active .univer-popup input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--interactive-accent) !important;
+}
+
+/* Group-title editor lives in the body-level `base-global-menu` portal. */
+[data-u-comp='base-global-menu'] input {
+  border-color: var(--background-modifier-border) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+[data-u-comp='base-global-menu'] input:focus {
+  border-color: var(--interactive-accent) !important;
+  box-shadow: 0 0 0 1px var(--interactive-accent) !important;
+  outline: none !important;
+}
+/* Base sub-item / dialog close icons are plain buttons; Obsidian paints them
+ * with a grey background. Flatten them and keep a hover state. */
+.univer-base-app button[aria-label^='关闭'],
+.univer-base-app button[aria-label^='Close'],
+body.univer-base-active [role='dialog'] button[aria-label^='关闭'],
+body.univer-base-active [role='dialog'] button[aria-label^='Close'] {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.univer-base-app button[aria-label^='关闭']:hover,
+.univer-base-app button[aria-label^='Close']:hover,
+body.univer-base-active [role='dialog'] button[aria-label^='关闭']:hover,
+body.univer-base-active [role='dialog'] button[aria-label^='Close']:hover {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+/* Record drawer header icon buttons (close / delete / more) have no useful
+ * aria-label; flatten icon-only buttons inside the drawer instead. */
+[data-u-comp='base-record-detail-drawer'] button:has(svg),
+[data-u-comp='base-right-panel'] button:has(svg) {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+[data-u-comp='base-record-detail-drawer'] button:has(svg):hover,
+[data-u-comp='base-right-panel'] button:has(svg):hover {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+/* CreatedAt is rendered as plain text (unlike Date, which has a control), so
+ * it sits at the top of the record row. Centre the value cell vertically. */
+.univer-base-app [data-field-type='createdAt'] {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 32px;
+}
+
+.univer-base-app [data-field-type='createdAt'] > * {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* --------------------------------------------------------------------------
+ * Base text fields: grow instead of clipping
+ *
+ * The record editor renders text as a `rows=1` textarea inside
+ * `[data-u-comp='base-text-cell-editor']`, and that wrapper (plus the
+ * `univer-h-8` cell around it) is locked to 32px with `overflow: hidden`.
+ * Clearing the fixed height on all three levels lets long values such as 备注
+ * wrap onto multiple lines instead of being cut off with a scrollbar.
+ * ----------------------------------------------------------------------- */
+
+[data-u-comp='base-text-cell-editor'] {
+  height: auto !important;
+  align-items: start !important;
+  overflow: visible !important;
+}
+
+[data-u-comp='base-text-cell-editor'] textarea {
+  height: auto !important;
+  min-height: 32px;
+  max-height: 260px;
+  overflow-y: auto !important;
+  field-sizing: content;
+}
+
+.univer-base-app div.univer-h-8:has(> [data-u-comp='base-text-cell-editor']) {
+  height: auto !important;
+  min-height: 32px;
+}
+
+/* --------------------------------------------------------------------------
+ * Base checkbox rows
+ *
+ * Univer renders a hidden `<input type=checkbox>` next to a drawn `<span>`
+ * swatch. The input is meant to be 0×0, but Obsidian's global form styles give
+ * it a real 16px box, which pushes the swatch down and makes the label look
+ * misaligned (e.g. 提交后继续新增记录 in the record footer).
+ * ----------------------------------------------------------------------- */
+
+.univer-base-app input[type='checkbox'],
+[data-u-comp='base-global-menu'] input[type='checkbox'],
+[data-u-comp='base-record-detail-footer'] input[type='checkbox'] {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
 }
