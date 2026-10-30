@@ -1,4 +1,4 @@
-# Univer Sheet 2.3.0
+# Univer Sheet 2.3.1
 
 Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0**.
 

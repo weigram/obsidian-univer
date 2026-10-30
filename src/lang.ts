@@ -1,23 +1,13 @@
-import { getLanguage, moment } from 'obsidian'
+import { moment } from 'obsidian'
 
 /**
  * Obsidian's UI language.
  *
- * `getLanguage()` only exists on newer versions (1.14+), so fall back to the
- * value Obsidian stores in localStorage and finally to moment's locale.
+ * `getLanguage()` only exists on Obsidian 1.14+, and using it would force a
+ * higher `minAppVersion`. Obsidian stores the selected language in
+ * localStorage and keeps moment's locale in sync, so both are enough here.
  */
 export function obsidianLanguage(): string {
-  try {
-    if (typeof getLanguage === 'function') {
-      const language = getLanguage()
-      if (language)
-        return language
-    }
-  }
-  catch {
-    // Older Obsidian versions do not export getLanguage.
-  }
-
   try {
     const stored = window.localStorage.getItem('language')
     if (stored)

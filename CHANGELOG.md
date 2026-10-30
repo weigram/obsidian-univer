@@ -1,3 +1,9 @@
+# 2.3.1
+
+### Fixed
+
+* Manifest description no longer contains the word "Obsidian" (community directory requirement)
+
 # 2.3.0
 
 ### Changed
