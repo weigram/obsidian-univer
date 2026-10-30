@@ -1,5 +1,5 @@
 import type { IBaseSnapshot } from '@univerjs/core'
-import { BaseFieldType } from '@univerjs/core'
+import { BaseFieldType, BaseViewType } from '@univerjs/core'
 import type { FUniver } from '@univerjs/core/facade'
 import type { FBase, FBaseTable, FBaseTableField } from '@univerjs-pro/bases/facade'
 import type { Univer } from '@univerjs/presets'
@@ -72,6 +72,7 @@ export class UBaseView extends TextFileView {
     }))
     this.registerDomEvent(document, 'pointerdown', event => this.rememberSelectField(event), true)
     this.registerDomEvent(document, 'keydown', event => this.handleSelectKeydown(event), true)
+    this.registerDomEvent(window, 'keydown', event => this.handleTextareaEnter(event), true)
   }
 
   override setViewData(data: string, clear: boolean): void {
@@ -202,8 +203,8 @@ export class UBaseView extends TextFileView {
    * row label is the only reliable link back to the field.
    */
   private rememberSelectField(event: Event): void {
-    const target = event.target
-    if (!(target instanceof HTMLElement))
+    const target = event.target as Node | null
+    if (!target?.instanceOf(HTMLElement))
       return
 
     const row = target.closest<HTMLElement>('[data-field-type="singleSelect"]')
@@ -215,6 +216,48 @@ export class UBaseView extends TextFileView {
     const labelText = label?.getAttribute('aria-label')?.replace(/^(编辑|Edit)\s+/i, '')
     if (labelText)
       this.pendingSelectFieldName = labelText
+  }
+
+  /**
+   * Univer's record-detail text cell commits the edit on Enter. Keep that
+   * behaviour and insert a newline for Cmd+Enter / Ctrl+Enter instead, so
+   * multi-line notes can be written while plain Enter still saves.
+   */
+  private handleTextareaEnter(event: KeyboardEvent): void {
+    // Dedupe our own listeners without relying on `defaultPrevented`, which
+    // Obsidian may already have set for Cmd+Enter.
+    const handled = event as KeyboardEvent & { __univerBaseEnter?: boolean }
+    if (handled.__univerBaseEnter)
+      return
+
+    if (event.key !== 'Enter' || event.isComposing)
+      return
+    if (!event.metaKey && !event.ctrlKey)
+      return
+    handled.__univerBaseEnter = true
+
+    const target = event.target as Node | null
+    if (!target?.instanceOf(HTMLTextAreaElement))
+      return
+    if (!(target as HTMLElement).closest('[data-u-comp="base-text-cell-editor"]'))
+      return
+
+    event.preventDefault()
+    event.stopPropagation()
+
+    const start = target.selectionStart ?? target.value.length
+    const end = target.selectionEnd ?? start
+    const next = `${target.value.slice(0, start)}\n${target.value.slice(end)}`
+
+    const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')?.set
+    if (setter)
+      setter.call(target, next)
+    else
+      target.value = next
+
+    target.selectionStart = start + 1
+    target.selectionEnd = start + 1
+    target.dispatchEvent(new Event('input', { bubbles: true }))
   }
 
   /**
@@ -332,7 +375,7 @@ export class UBaseView extends TextFileView {
           changed = true
         })
 
-        const kanban = table.getViews().find(view => view.getType() === 'kanban')
+        const kanban = table.getViews().find(view => view.getType() === BaseViewType.Kanban)
         if (!kanban)
           continue
 

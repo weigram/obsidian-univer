@@ -1,3 +1,17 @@
+# 2.3.2
+
+### Fixed
+
+* Cmd+Enter / Ctrl+Enter inserts a line break in Base record text fields again; plain Enter still saves
+
+### Changed
+
+* Use `getMostRecentLeaf()` instead of the deprecated `activeLeaf`
+* Use `window.requestAnimationFrame()` and `Element.instanceOf()` for popout-window compatibility
+* Compare Base view types against `BaseViewType` instead of string literals
+* Detect the UI language from moment's locale only
+* Release workflow publishes `main.js`, `manifest.json` and `styles.css` only, plus build provenance attestations
+
 # 2.3.1
 
 ### Fixed

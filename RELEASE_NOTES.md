@@ -1,4 +1,4 @@
-# Univer Sheet 2.3.1
+# Univer Sheet 2.3.2
 
 Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0**.
 
@@ -17,6 +17,12 @@ Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0
   each record's creation timestamp.
 - A manually created `完成时间` date field is filled when a Kanban card enters
   `已完成`, and cleared when it leaves.
+
+### Fixed
+
+- Cmd+Enter / Ctrl+Enter inserts a line break in Base record text fields;
+  plain Enter still saves.
+- Base checkboxes and primary buttons are aligned and outlined correctly.
 
 ### UI polish
 

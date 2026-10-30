@@ -215,7 +215,7 @@ export class USheetView extends TextFileView {
     this.restoreViewState()
     this.subscribeViewState()
 
-    requestAnimationFrame(() => this.plugin.syncStatusBarLayout())
+    window.requestAnimationFrame(() => this.plugin.syncStatusBarLayout())
     window.setTimeout(() => this.plugin.syncStatusBarLayout(), 300)
     window.setTimeout(() => this.plugin.syncStatusBarLayout(), 1000)
   }

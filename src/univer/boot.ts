@@ -1,4 +1,3 @@
-import type { IPreset } from '@univerjs/presets'
 import { createUniver, defaultTheme, LocaleType, mergeLocales } from '@univerjs/presets'
 import { UniverSheetsCorePreset } from '@univerjs/preset-sheets-core'
 import enUS from '@univerjs/preset-sheets-core/locales/en-US'
@@ -27,8 +26,8 @@ export function bootUniver(container: HTMLElement, options: BootOptions) {
   const { univer, univerAPI } = createUniver({
     locale: options.locale,
     locales: {
-      [LocaleType.EN_US]: mergeLocales(enUS),
-      [LocaleType.ZH_CN]: mergeLocales(zhCN),
+      [LocaleType.EN_US]: mergeLocales(enUS as Parameters<typeof mergeLocales>[0]),
+      [LocaleType.ZH_CN]: mergeLocales(zhCN as Parameters<typeof mergeLocales>[0]),
     },
     theme: defaultTheme,
     darkMode: options.darkMode,
@@ -41,7 +40,7 @@ export function bootUniver(container: HTMLElement, options: BootOptions) {
         formulaBar: options.formulaBar ?? true,
         ribbonType: options.ribbonType ?? 'simple',
         contextMenu: true,
-      }) as IPreset,
+      }),
     ],
   })
 

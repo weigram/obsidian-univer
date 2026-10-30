@@ -131,7 +131,7 @@ export default class UniverPlugin extends Plugin {
    * which otherwise creates a second row below the sheet tabs.
    */
   syncStatusBarLayout(): void {
-    const activeView = this.app.workspace.activeLeaf?.view
+    const activeView = this.app.workspace.getMostRecentLeaf()?.view
     const isSheet = activeView?.getViewType?.() === VIEW_TYPE
     const isBase = activeView?.getViewType?.() === BASE_VIEW_TYPE
 
@@ -144,18 +144,18 @@ export default class UniverPlugin extends Plugin {
 
     // Toggling the body class reflows the workspace (Obsidian's status bar
     // leaves the normal flow), so measure on the next frame.
-    requestAnimationFrame(() => this.measureStatusBar(activeView))
+    window.requestAnimationFrame(() => this.measureStatusBar(activeView))
   }
 
   private measureStatusBar(view: USheetView, attempt = 0): void {
-    if (this.app.workspace.activeLeaf?.view !== view)
+    if (this.app.workspace.getMostRecentLeaf()?.view !== view)
       return
 
     const container = view.contentEl.querySelector<HTMLElement>('.univer-app')
     const footer = view.contentEl.querySelector<HTMLElement>('footer')
     const section = footer?.querySelector<HTMLElement>('section')
     const groups = section
-      ? Array.from(section.children).filter((child): child is HTMLElement => child instanceof HTMLElement)
+      ? Array.from(section.children).filter((child): child is HTMLElement => child.instanceOf(HTMLElement))
       : []
     const rightGroup = groups[1] ?? groups[groups.length - 1]
 

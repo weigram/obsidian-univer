@@ -3,21 +3,11 @@ import { moment } from 'obsidian'
 /**
  * Obsidian's UI language.
  *
- * `getLanguage()` only exists on Obsidian 1.14+, and using it would force a
- * higher `minAppVersion`. Obsidian stores the selected language in
- * localStorage and keeps moment's locale in sync, so both are enough here.
+ * Obsidian keeps moment's locale in sync with the language selected in
+ * Settings → General, so reading it avoids depending on newer APIs.
  */
 export function obsidianLanguage(): string {
-  try {
-    const stored = window.localStorage.getItem('language')
-    if (stored)
-      return stored
-  }
-  catch {
-    // localStorage can be unavailable in restricted contexts.
-  }
-
-  return moment.locale()
+  return moment.locale() || 'en'
 }
 
 export function isChinese(): boolean {
