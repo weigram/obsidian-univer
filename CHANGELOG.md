@@ -1,3 +1,11 @@
+# 2.3.0
+
+### Changed
+
+* Plugin renamed to `univer-sheet` ("Univer Sheet") with a new, unique plugin id
+* Author set to the fork maintainer
+* Added `NOTICE` and `THIRD-PARTY-NOTICES.md`; documented Apache-2.0 and Univer Pro licensing
+
 # 2.2.0
 
 ### Features

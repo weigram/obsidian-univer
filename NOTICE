@@ -1,0 +1,28 @@
+Univer Sheet for Obsidian
+=========================
+
+Copyright 2024-2026 DreamNum Co., Ltd.
+  Original "Univer for Obsidian" plugin and the Univer SDK.
+
+Copyright 2026 weigram
+  Modifications and additions in this fork.
+
+This product includes software developed at DreamNum
+(https://github.com/dream-num, https://univer.ai), namely:
+
+  * the Univer for Obsidian plugin, https://github.com/dream-num/obsidian-univer
+  * the Univer SDK packages published under the `@univerjs/` scope
+
+Those components are licensed under the Apache License, Version 2.0.
+A copy of that license is included in the LICENSE file of this repository.
+
+This fork adds Univer Bases (relational table) support, UI adjustments and other
+changes. Modified files remain available under the Apache License, Version 2.0.
+
+IMPORTANT
+---------
+
+This distribution also bundles proprietary Univer Pro packages published under the
+`@univerjs-pro/` scope. Those packages are NOT covered by the Apache License 2.0 and
+are distributed under a separate commercial license from DreamNum. See
+THIRD-PARTY-NOTICES.md for details and for the list of bundled components.

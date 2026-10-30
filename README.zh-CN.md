@@ -1,4 +1,4 @@
-# Univer for Obsidian
+# Univer Sheet for Obsidian
 
 简体中文 | [English](README.md)
 
@@ -38,4 +38,10 @@
 
 只注册 sheets-core preset 和 Bases 插件；不包含文档、Excel 导入导出和协作模块。
 
-> **Univer Bases 属于 Univer Pro。** 当前构建包含 `@univerjs-pro` 商业包，请保持仓库私有；没有商业授权时不要对外分发。可在插件设置中填入 license 以退出评估模式。
+> **Univer Bases 属于 Univer Pro。** 当前构建包含 `@univerjs-pro` 商业包，适用 DreamNum 的单独商业许可，不属于 Apache-2.0。再分发包含这些包的构建产物，需要先接受 Univer Pro 条款，详见 [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)。可在插件设置中填入 license 以退出评估模式。
+
+## 许可
+
+- 插件代码：[Apache-2.0](./LICENSE)
+- 版权归属：[NOTICE](./NOTICE)
+- 打包的第三方组件与 Univer Pro 许可说明：[THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)

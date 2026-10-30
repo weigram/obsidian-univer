@@ -1,4 +1,4 @@
-# Univer for Obsidian
+# Univer Sheet for Obsidian
 
 English | [简体中文](README.zh-CN.md)
 
@@ -41,6 +41,13 @@ Only the sheets-core preset and the Bases plugins are registered; docs, Excel
 import/export and collaboration packages are intentionally not included.
 
 > **Univer Bases is part of Univer Pro.** This build bundles `@univerjs-pro`
-> packages. Keep the repository private and do not redistribute it without a
-> commercial Univer Pro license. Add a license in the plugin settings to leave
-> evaluation mode.
+> packages, which are covered by a separate commercial license from DreamNum and
+> not by Apache-2.0. Redistributing a build that contains them requires accepting
+> the Univer Pro terms — see [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md).
+> Add a license in the plugin settings to leave evaluation mode.
+
+## License
+
+- Plugin code: [Apache-2.0](./LICENSE)
+- Attribution: [NOTICE](./NOTICE)
+- Bundled third-party components and the Univer Pro terms: [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)

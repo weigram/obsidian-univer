@@ -19,13 +19,12 @@ function obsidianPlugin() {
     async writeBundle() {
       await writeFile(resolve(outDir, 'manifest.json'), `${JSON.stringify({
         id: pkg.name,
-        name: 'Univer',
+        name: 'Univer Sheet',
         version: pkg.version,
         minAppVersion: '1.6.0',
         description: pkg.description,
         author: pkg.author,
-        authorUrl: 'https://github.com/dream-num',
-        fundingUrl: 'https://opencollective.com/univer',
+        authorUrl: 'https://github.com/weigram',
         isDesktopOnly: true,
       }, null, 2)}\n`)
 

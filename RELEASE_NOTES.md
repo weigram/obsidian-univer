@@ -1,6 +1,8 @@
-# Univer 2.2.0
+# Univer Sheet 2.3.0
 
 Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0**.
+
+> This release renames the plugin to **Univer Sheet** with the new plugin id `univer-sheet`.
 
 ### Relational tables (Univer Bases)
 
@@ -33,3 +35,9 @@ Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0
 
 > Univer Bases is part of Univer Pro. Keep this repository private and do not
 > redistribute the Pro packages without a commercial license.
+
+### Licensing
+
+- Plugin code: Apache-2.0 (`LICENSE`)
+- Attribution: `NOTICE`
+- Bundled components and the Univer Pro terms: `THIRD-PARTY-NOTICES.md`

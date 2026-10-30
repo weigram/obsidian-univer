@@ -1,10 +1,10 @@
 {
-  "name": "univer",
+  "name": "univer-sheet",
   "type": "module",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "packageManager": "pnpm@9.4.0",
   "description": "Open, edit and create Univer spreadsheets (.usheet) and relational tables (.ubase) inside Obsidian.",
-  "author": "DreamNum",
+  "author": "weigram",
   "license": "Apache-2.0",
   "keywords": [
     "univer",
@@ -44,5 +44,13 @@
     "obsidian": "1.14.4",
     "typescript": "~5.9.3",
     "vite": "^7.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weigram/obsidian-univer-sheet.git"
+  },
+  "homepage": "https://github.com/weigram/obsidian-univer-sheet#readme",
+  "bugs": {
+    "url": "https://github.com/weigram/obsidian-univer-sheet/issues"
   }
 }
