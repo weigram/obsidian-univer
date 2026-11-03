@@ -1,8 +1,18 @@
-# Univer Sheet 2.3.2
+# Univer Sheet 2.4.0
 
-Spreadsheet and relational-table support for Obsidian, powered by Univer **1.2.0**.
+Spreadsheet and relational-table support for Obsidian, powered by Univer **1.3.1**.
 
 > This release renames the plugin to **Univer Sheet** with the new plugin id `univer-sheet`.
+
+### Univer 1.3.1
+
+- Bases: improved view tabs, hierarchical rows and selection interactions.
+- Sheets: applying styles no longer drops text, number-format colours are
+  correct, and table borders survive filtering.
+- Sheets: zero-sized rows/columns are restored; renaming an empty sheet keeps
+  the caret.
+- UI: improved colour picker, resettable sheet tab colours, aligned zoom slider.
+- Conditional formatting gains "Stop If True".
 
 ### Relational tables (Univer Bases)
 

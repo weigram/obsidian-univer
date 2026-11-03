@@ -1,3 +1,16 @@
+# 2.4.0
+
+### Changed
+
+* Upgrade Univer from 1.2.0 to 1.3.1 (all `@univerjs/*` and `@univerjs-pro/*` packages)
+
+### Improved
+
+* Bases: better view tabs, hierarchical rows and selection interactions (Univer 1.3.0)
+* Sheets: applying styles keeps text values, number-format colours are correct, table borders survive filtering
+* Sheets: zero-sized rows and columns are restored, renaming an empty sheet keeps the caret
+* UI: improved colour picker, resettable sheet tab colours, aligned zoom slider
+
 # 2.3.2
 
 ### Fixed
