@@ -616,3 +616,32 @@ body.univer-base-active [role='dialog'] button[aria-label^='Close']:hover {
   appearance: none !important;
   -webkit-appearance: none !important;
 }
+
+/* --------------------------------------------------------------------------
+ * Univer popups (context menus, dropdowns)
+ *
+ * Univer renders context menus and popovers in a body-level
+ * `section.univer-popup` portal, outside `.univer-app`. Obsidian 1.13+ paints
+ * every `button` with the theme's button background and border, so each menu
+ * row turns into a grey box (复制 / 剪切 / 插入 / 冻结 …). Univer asks for a
+ * transparent row, so restore that and keep a hover state of our own.
+ * ----------------------------------------------------------------------- */
+
+.univer-popup button.univer-bg-transparent,
+.univer-app button.univer-bg-transparent,
+.univer-base-app button.univer-bg-transparent,
+[data-u-comp='base-global-menu'] button.univer-bg-transparent {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.univer-popup button.univer-bg-transparent:hover:not(:disabled),
+.univer-app button.univer-bg-transparent:hover:not(:disabled),
+.univer-base-app button.univer-bg-transparent:hover:not(:disabled),
+[data-u-comp='base-global-menu'] button.univer-bg-transparent:hover:not(:disabled),
+.univer-popup button.univer-bg-transparent:focus-visible,
+.univer-app button.univer-bg-transparent:focus-visible,
+.univer-base-app button.univer-bg-transparent:focus-visible {
+  background-color: var(--background-modifier-hover) !important;
+}

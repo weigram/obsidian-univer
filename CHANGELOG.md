@@ -1,3 +1,18 @@
+# 2.5.0
+
+### Changed
+
+* Upgrade Univer from 1.3.1 to 1.6.1 (all `@univerjs/*` and `@univerjs-pro/*` packages)
+* `main.js` shrinks from 22.8 MB to 14.0 MB thanks to smaller Univer 1.6 builds
+
+### Improved
+
+* Bases: planned schedules, progress and predecessor links in Gantt views (Univer 1.6.0)
+* Bases: dozens of view, hierarchy and interaction fixes across 1.4 - 1.6
+* Sheets: chart sheets, stacked line charts and error bars; fewer scroll artefacts
+* Sheets: Office attachment support, richer pivot filtering, `GETPIVOTDATA`
+* UI: tighter dialog, sidebar and drawer padding
+
 # 2.4.0
 
 ### Changed
